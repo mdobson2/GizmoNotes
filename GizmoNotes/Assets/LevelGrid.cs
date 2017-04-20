@@ -43,4 +43,37 @@ public class LevelGrid : MonoBehaviour {
         Gizmos.color = selectedColor;
         GridFrameGizmo(col, row);
     }
+
+    public Vector3 WorldToGrid(Vector3 point)
+    {
+        Vector3 gridPoint = new Vector3
+            ((int)point.x / gridSize,
+            (int)point.y / gridSize,
+            0);
+        return gridPoint;       
+    }
+
+    public Vector3 GridToWorld(int col, int row)
+    {
+        Vector3 worldPoint = new Vector3(
+            col * gridSize + gridSize / 2,
+            row * gridSize + gridSize / 2,
+            0);
+        return worldPoint;
+    }
+    
+    public bool IsInsideGridBounds(Vector3 point)
+    {
+        float minX = 0;
+        float minY = 0;
+        float maxX = gridSize * col;
+        float maxY = gridSize * row;
+
+        return (point.x >= minX && point.x <= maxX && point.y >= minY && point.y <= maxY);
+    }
+
+    public bool IsInsideGridBounds(int colP, int rowP)
+    {
+        return (colP >= 0 && colP < col && rowP >= 0 && rowP < row);
+    }
 }
